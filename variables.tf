@@ -27,3 +27,9 @@ variable "iam_members" {
   type        = list(string)
   default     = ["user:nicolas.perez.caro.coding@gmail.com"]
 }
+
+variable "secret_value" {
+  description = "The value of the secret"
+  type = string
+  sensitive = true
+}

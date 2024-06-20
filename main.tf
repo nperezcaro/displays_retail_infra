@@ -18,3 +18,16 @@ resource "google_storage_bucket_iam_member" "member" {
   role = "roles/storage.admin"
   member = var.iam_members[0]
 }
+
+resource "google_secret_manager_secret" "database_secret" {
+  secret_id = "database_url"
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "database_secret_version" {
+  secret = google_secret_manager_secret.database_secret.id
+  secret_data = var.secret_value
+}
