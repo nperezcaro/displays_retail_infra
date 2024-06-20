@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "gcp_terraform_bucket" {
-  name          = "displays_retail_infra_bucket"
+  name          = var.bucket_name
   location      = "US"
   force_destroy = true
 
@@ -10,13 +10,11 @@ resource "google_storage_bucket" "gcp_terraform_bucket" {
 resource "google_storage_bucket_iam_binding" "binding" {
   bucket = google_storage_bucket.gcp_terraform_bucket.name
   role = "roles/storage.admin"
-  members = [
-    "user:nicolas.perez.caro.coding@gmail.com",
-  ]
+  members = var.iam_members
 }
 
 resource "google_storage_bucket_iam_member" "member" {
   bucket = google_storage_bucket.gcp_terraform_bucket.name
   role = "roles/storage.admin"
-  member = "user:nicolas.perez.caro.coding@gmail.com"
+  member = var.iam_members[0]
 }
